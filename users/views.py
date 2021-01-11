@@ -15,6 +15,7 @@ class ObtainConfirmationCode(generics.CreateAPIView):
     serializer_class = ConfirmathionCodeSerializer
     permission_classes = [permissions.AllowAny]
 
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def obtain_token(request):
@@ -29,22 +30,22 @@ def obtain_token(request):
         refresh_token = RefreshToken.for_user(user)
         return Response({'access token': f'{access_token}',
                          'refresh token': f'{refresh_token}'},
-                          status=status.HTTP_200_OK)
+                        status=status.HTTP_200_OK)
     else:
         user = User.objects.create(email=email, username=instance.username)
         access_token = AccessToken.for_user(user)
         refresh_token = RefreshToken.for_user(user)
         return Response({'access token': f'{access_token}',
                          'refresh token': f'{refresh_token}'},
-                          status=status.HTTP_201_CREATED)     
-    
+                        status=status.HTTP_201_CREATED)
+
 
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
     permission_classes = [permissions.IsAuthenticated, IsAdminOrProhibited]
     lookup_field = 'username'
-   
+
     @action(detail=False, methods=['get', 'patch'], permission_classes=[permissions.IsAuthenticated, IsAdminOrAuthor])
     def me(self, request):
         user = request.user

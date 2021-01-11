@@ -2,8 +2,8 @@ import uuid
 
 from django.core.mail import send_mail
 from rest_framework import serializers, status
-
 from .models import User, EmailCode
+
 
 class ConfirmathionCodeSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
@@ -19,18 +19,20 @@ class ConfirmathionCodeSerializer(serializers.Serializer):
         send_mail(
             'Successful registration', f'Welcome to yamdb, your confirmation code is {code}', 'yamdb_reg@yamdb.com', [email], fail_silently=False,
         )
-        
         return ec
+
 
 class TokenSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     confirmation_code = serializers.CharField(required=True)
+
 
 class UsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ('first_name', 'last_name', 'username', 'email', 'bio', 'role')
         model = User
+
 
 class ProfileSerializer(serializers.ModelSerializer):
 

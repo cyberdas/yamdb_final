@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Category, Genre, Title, Review, Comment
 
+
 class CategoriesSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -26,6 +27,7 @@ class ListTitlesSerializer(serializers.ModelSerializer):
         model = Title
         fields = ('id', 'name', 'year', 'description', 'genre', 'category', 'rating')
         read_only_fields = ('id',)
+
 
 class DetailsTitlesSerializer(serializers.ModelSerializer):
 

@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from users.models import User
 
+
 class Category(models.Model):
 
     name = models.CharField(max_length=200, null=True)
@@ -43,6 +44,7 @@ class Title(models.Model):
     def __str__(self):
         return self.name
 
+
 class Review(models.Model):
 
     text = models.TextField()
@@ -57,7 +59,7 @@ class Review(models.Model):
 
 class Comment(models.Model):
 
-    review = models.ForeignKey(Review,on_delete=models.CASCADE, related_name='comments')
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     pub_date = models.DateTimeField('Дата публикации комментария', auto_now_add=True)

@@ -9,12 +9,13 @@ from .mixins import PermissionMixin
 from .permissions import IsAdminUserOrReadOnly, IsAdminOrAuthor
 from .serializers import CategoriesSerializer, GenresSerializer, ListTitlesSerializer, DetailsTitlesSerializer, ReviewsSerializer, CommentsSerializer
 
+
 class CreatListDestroyViewSet(mixins.CreateModelMixin,
                               mixins.DestroyModelMixin,
                               mixins.ListModelMixin,
                               viewsets.GenericViewSet):
     pass
-  
+
 
 class CategoriesViewSet(CreatListDestroyViewSet):
 
@@ -49,8 +50,9 @@ class TitlesViewSet(viewsets.ModelViewSet):
         return ListTitlesSerializer
 
     def get_queryset(self):
-        queryset = Title.objects.annotate(rating = Avg('reviews__score'))
+        queryset = Title.objects.annotate(rating=Avg('reviews__score'))
         return queryset
+
 
 class ReviewsViewSet(PermissionMixin):
 
@@ -68,7 +70,6 @@ class ReviewsViewSet(PermissionMixin):
 class CommentsViewSet(PermissionMixin):
 
     serializer_class = CommentsSerializer
-
 
     def get_queryset(self):
         comments = Comment.objects.filter(review=self.kwargs.get('review_id'))
