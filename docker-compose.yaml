@@ -23,7 +23,7 @@ services:
     ports:
       - "8000:8000"
   nginx:
-    image: nginx:latest
+    image: nginx:1.19.5-alpine
     restart: always
     volumes:
       - static_volume:/code/static
